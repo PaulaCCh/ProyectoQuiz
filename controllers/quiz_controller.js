@@ -17,13 +17,13 @@ models.Quiz.find(quizId).then(function(quiz){
  exports.index= function(req, res) {
   if(req.param.search !== undefined){
     models.Quiz.findAll({where: ["pregunta like ?", '%' + req.param.search+'%']}).then(function(quizes){
-    res.render('quizes/index', {quizes: quizes});
+    res.render('quizes/index', {quizes: quizes, hola : 'klj'});
 
    }
     ).catch(function(error){next(error);})
   } else
    models.Quiz.findAll().then(function(quizes){
-    res.render('quizes/index', {quizes: quizes});
+    res.render('quizes/index', {quizes: quizes, hola : 'yui'});
 
    }
     ).catch(function(error){next(error);})
