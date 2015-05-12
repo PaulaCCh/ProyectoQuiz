@@ -16,7 +16,7 @@ models.Quiz.find(quizId).then(function(quiz){
  //GET /quizes
  exports.index= function(req, res) {
    models.Quiz.findAll().then(function(quizes){
-    res.render('quizes/index.ejs', {quizes: quizes});
+    res.render('quizes/index', {quizes: quizes});
    }
     ).catch(function(error){next(error);})
 };
