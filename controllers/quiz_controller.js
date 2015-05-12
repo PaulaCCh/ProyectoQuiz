@@ -22,7 +22,7 @@ models.Quiz.find(quizId).then(function(quiz){
 
    }
     ).catch(function(error){next(error);})
-  }
+  } else
    models.Quiz.findAll().then(function(quizes){
     res.render('quizes/index', {quizes: quizes});
 
