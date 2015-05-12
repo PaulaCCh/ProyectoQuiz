@@ -15,15 +15,15 @@ models.Quiz.find(quizId).then(function(quiz){
 
  //GET /quizes
  exports.index= function(req, res) {
-  if(req.params.search !== undefined){
-    models.Quiz.findAll({where: ["pregunta like ?", '%' + req.params.search+'%']}).then(function(quizes){
-    res.render('quizes/index', {quizes: quizes, hola : 'klj'});
+  if(req.query.search !== undefined){
+    models.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.replace(/ /g, '%') +'%']}).then(function(quizes){
+    res.render('quizes/index', {quizes: quizes});
 
    }
     ).catch(function(error){next(error);})
-  } else
+  }
    models.Quiz.findAll().then(function(quizes){
-    res.render('quizes/index', {quizes: quizes, hola : 'yui'});
+    res.render('quizes/index', {quizes: quizes});
 
    }
     ).catch(function(error){next(error);})
