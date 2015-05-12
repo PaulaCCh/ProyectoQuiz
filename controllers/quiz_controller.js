@@ -15,8 +15,16 @@ models.Quiz.find(quizId).then(function(quiz){
 
  //GET /quizes
  exports.index= function(req, res) {
+  if(req.param.search !== undefined){
+    models.Quiz.findAll({where: ["pregunta like ?", req.param.search.replace(/ /g, '%');]})then(function(quizes){
+    res.render('quizes/index', {quizes: quizes});
+
+   }
+    ).catch(function(error){next(error);})
+  }
    models.Quiz.findAll().then(function(quizes){
     res.render('quizes/index', {quizes: quizes});
+
    }
     ).catch(function(error){next(error);})
 };
