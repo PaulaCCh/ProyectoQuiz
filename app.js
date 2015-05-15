@@ -27,6 +27,15 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+    if(req.session.tiempo !== undefined && req.session.tiempo + 120000 <= Date.now() ) {
+        delete req.session.user;
+    }
+
+    req.session.tiempo=Date.now();
+  next();
+});
+
 
 // Helpers dinamicos:
 app.use(function(req, res, next) {
