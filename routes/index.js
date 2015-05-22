@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 
 // Autoload de comandos con :quizId
 router.param('quizId', quizController.load); // autoload:quizId
-
+router.param('commentId', commentController.load);  // autoload :commentId
 //router.get('/quizes/question',quizController.question);
 //router.get('/quizes/answer', quizController.answer);
 router.get('/author', authorController.author);
@@ -33,5 +33,6 @@ router.put('/quizes/:quizId(\\d+)',sessionController.loginRequired, quizControll
 router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired,quizController.destroy);
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',  commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 router.get('/statistics', statisticsController.show);
 module.exports = router;

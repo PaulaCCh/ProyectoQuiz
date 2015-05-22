@@ -19,17 +19,14 @@ exports.load = function(req, res, next, quizId){
  //GET /quizes
  exports.index= function(req, res) {
   if(req.query.search !== undefined){
-    models.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.replace(/ /g, '%') +'%']}).then(function(quizes){
-    res.render('quizes/index.ejs', {quizes: quizes, errors : []});
-
-   }
-    ).catch(function(error){next(error);})
-  } else
-   models.Quiz.findAll().then(function(quizes){
-    res.render('quizes/index', {quizes: quizes, errors : []});
-
-   }
-    ).catch(function(error){next(error);})
+      models.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.replace(/ /g, '%') +'%']}).then(function(quizes){
+      res.render('quizes/index.ejs', {quizes: quizes, errors : []});
+    }).catch(function(error){next(error);})
+  } else {
+      models.Quiz.findAll().then(function(quizes){
+      res.render('quizes/index', {quizes: quizes, errors : []});
+    }).catch(function(error){next(error);})
+    }
 };
 
 // GET quizes/:id
@@ -105,3 +102,5 @@ exports.destroy = function(req, res) {
     res.redirect('/quizes');
   }).catch(function(error){next(error)});
 };
+
+//GET
