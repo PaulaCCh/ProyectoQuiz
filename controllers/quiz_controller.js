@@ -17,7 +17,7 @@ exports.load = function(req, res, next, quizId){
 };
 
  //GET /quizes
- exports.index= function(req, res) {
+ exports.index= function(req, res, next) {
   if(req.query.search !== undefined){
       models.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.replace(/ /g, '%') +'%']}).then(function(quizes){
       res.render('quizes/index.ejs', {quizes: quizes, errors : []});
@@ -58,7 +58,8 @@ exports.new = function(req, res) {
 };
 
 // POST /quizes/create
-exports.create = function(req, res) {
+exports.create = function(req, res, next) {
+  req.body.quiz.UserId =req.session.user.id;
   var quiz = models.Quiz.build( req.body.quiz );
 
 quiz.validate().then(function(err){
@@ -66,7 +67,7 @@ quiz.validate().then(function(err){
         res.render('quizes/new', {quiz: quiz, errors: err.errors});
       } else {
         quiz // save: guarda en DB campos pregunta y respuesta de quiz
-        .save({fields: ["pregunta", "respuesta"]})
+        .save({fields: ["pregunta", "respuesta", "UserId"]})
         .then( function(){ res.redirect('/quizes')}) 
       }      // res.redirect: Redirección HTTP a lista de preguntas
     }
@@ -80,7 +81,7 @@ exports.edit = function(req, res) {
 };
 
 // PUT /quizes/:id
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   req.quiz.pregunta  = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
 
@@ -97,7 +98,7 @@ exports.update = function(req, res) {
 };
 
 // DELETE /quizes/:id
-exports.destroy = function(req, res) {
+exports.destroy = function(req, res, next) {
   req.quiz.destroy().then( function() {
     res.redirect('/quizes');
   }).catch(function(error){next(error)});
