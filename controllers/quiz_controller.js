@@ -29,12 +29,14 @@ exports.load = function(req, res, next, quizId){
 
  //GET /quizes
  exports.index= function(req, res, next) {
+  
+
   if(req.query.search !== undefined){
-      models.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.replace(/ /g, '%') +'%']}).then(function(quizes){
+      models.Quiz.findAll({where: ["pregunta like ? " + (req.user ? "AND UserId = ?" : ""), '%' + req.query.search.replace(/ /g, '%') +'%', req.user]}).then(function(quizes){
       res.render('quizes/index.ejs', {quizes: quizes, errors : []});
     }).catch(function(error){next(error);})
   } else {
-      models.Quiz.findAll().then(function(quizes){
+      models.Quiz.findAll((req.user ? {where: {UserId: req.user.id}} : undefined)).then(function(quizes){
       res.render('quizes/index', {quizes: quizes, errors : []});
     }).catch(function(error){next(error);})
     }
