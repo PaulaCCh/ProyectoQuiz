@@ -34,7 +34,33 @@ exports.load = function(req, res, next, quizId){
     }).catch(function(error){next(error);})
   } else {
       models.Quiz.findAll((req.user ? {where: {UserId: req.user.id}} : undefined)).then(function(quizes){
-      res.render('quizes/index', {quizes: quizes, errors : []});
+
+      if(req.user) {
+        req.user.getQuizzes(function(favs) {
+
+            for( j in quizes) {
+              quizes[j].isFav = false;
+            }
+
+          for(i in favs) {
+            for( j in quizes) {
+              if(favs[i].id == quizes[j].id) {
+                quizes[j].isFav = true;
+                continue;
+              }
+            }
+          }
+
+
+          res.render('quizes/index', {quizes: quizes, errors : []});
+
+
+        })
+      } else {
+        res.render('quizes/index', {quizes: quizes, errors : []});
+      }
+
+      
     }).catch(function(error){next(error);})
     }
 };
