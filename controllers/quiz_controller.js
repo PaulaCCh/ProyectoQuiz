@@ -39,7 +39,7 @@ exports.load = function(req, res, next, quizId){
         req.user.getQuizzes(function(favs) {
 
             for( j in quizes) {
-              quizes[j].isFav = false;
+              quizes[j].isFav = true;
             }
 
           for(i in favs) {
