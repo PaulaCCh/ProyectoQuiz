@@ -8,7 +8,7 @@
   
     <td>
       <form method="post" action="/user/<%= session.user.id %>/favourites/<%= quizes[i].id %>?_method=<%= quizes[i].isFav? "delete" :"put" %> ">
-        <button type="submit" class="fa fa-star" style="color: <%= quizes[i].isFav ? "yellow" : "gray" %>"> </button>
+        <button type="submit" class="fa fa-star" style="color: <%= quizes[i].isFav ? "#FFD078" : "gray" %>"> </button>
         </form>
         </td>
 

@@ -55,7 +55,7 @@ exports.load = function(req, res, next, quizId){
           res.render('quizes/index', {quizes: quizes, errors : []});
 
 
-        })
+        });
       } else {
         res.render('quizes/index', {quizes: quizes, errors : []});
       }
