@@ -5,7 +5,7 @@
 	<%if(session.user){
          if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
         <td><a href="/quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
-        <td><form method="post" action="/user/<%= user.id %>/favoirutes/<%= quizes[i].id %>?_method=put" >
+        <td><form method="post" action="/user/<%= session.user.id %>/favourites/<%= quizes[i].id %>?_method=put" >
         <input type="submit" value="Añadir a favs" />
           
         </form>
