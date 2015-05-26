@@ -5,7 +5,7 @@
 
 	<%if(session.user){
   <td><form method="post" action="/user/<%= session.user.id %>/favourites/<%= quizes[i].id %>?_method=<%= quizes[i].isFav? "delete" :"put" %> " >
-        <button type="submit" class="fa fa-star" style="color: <%= quizes[i].isFav ? "yellow" : "gray" %>></button>
+        <button type="submit" class="fa fa-star" style="color: <%= quizes[i].isFav ? "yellow" : "gray" %> </button>
         </form>
         </td>
          if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
