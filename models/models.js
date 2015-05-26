@@ -34,19 +34,20 @@ Quiz.hasMany(Comment);
 Quiz.belongsTo(User);
 User.hasMany(Quiz);
 
+User.belongsToMany(Quiz, {through: 'Favourites'});
+Quiz.belongsToMany(User, {through: 'Favourites'});
+
 //exportar tablas
 
 exports.Quiz = Quiz;
 exports.Comment = Comment;
 exports.User = User;
 
-console.log('hellou');
 
 //sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function(){
 
 	User.count().then(function(count){
-		console.log("********************************************* " + count);
 
 	if(count===0){ //la tabla se inicializa solo si está vacia
 		User.bulkCreate(

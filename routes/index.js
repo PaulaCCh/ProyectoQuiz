@@ -7,6 +7,7 @@ var sessionController = require('../controllers/session_controller');
 var authorController=require('../controllers/author_controller')
 var statisticsController = require('../controllers/statistics_controller');
 var userController = require('../controllers/user_controller');
+var favouritesController = require('../controllers/favourites_controller')
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz', errors: [] });
@@ -32,6 +33,11 @@ router.put('/user/:userId(\\d+)',  sessionController.loginRequired, userControll
 router.delete('/user/:userId(\\d+)',  sessionController.loginRequired, userController.ownershipRequired, userController.destroy);     // borrar cuenta
 router.get('/user/:userId(\\d+)/quizes',  quizController.index);     // ver las preguntas de un usuario
 
+router.get('/user/:userId(\\d+)/favourites', favouritesController.index); 
+router.put('/user/:userId(\\d+)/favourites/:quizId', sessionController.loginRequired,  favouritesController.set); 
+router.delete('/user/:userId(\\d+)/favourites/:quizId', sessionController.loginRequired,  favouritesController.unset); 
+
+
 //definicion de rutas de quizes
 router.get('/quizes',quizController.index);
 router.get('/quizes/:quizId(\\d+)',quizController.show);
@@ -42,7 +48,7 @@ router.post('/quizes/create',              sessionController.loginRequired, mult
 router.post('/quizes/create', sessionController.loginRequired,quizController.create);
 router.get('/quizes/:quizId(\\d+)/edit',sessionController.loginRequired,quizController.ownershipRequired, quizController.edit);
 router.put('/quizes/:quizId(\\d+)',sessionController.loginRequired,quizController.ownershipRequired, quizController.update);
-router.put('/quizes/:quizId(\\d+)',        sessionController.loginRequired, quizController.ownershipRequired, multer({ dest: './public/media/'}), quizController.update);
+router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.ownershipRequired, multer({ dest: './public/media/'}), quizController.update);
 router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',  commentController.create);

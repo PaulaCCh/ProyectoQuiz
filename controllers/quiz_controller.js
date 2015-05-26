@@ -1,4 +1,3 @@
-
 var models= require('../models/models.js');
 // MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
 exports.ownershipRequired = function(req, res, next){
@@ -29,8 +28,6 @@ exports.load = function(req, res, next, quizId){
 
  //GET /quizes
  exports.index= function(req, res, next) {
-  
-
   if(req.query.search !== undefined){
       models.Quiz.findAll({where: ["pregunta like ? " + (req.user ? "AND UserId = ?" : ""), '%' + req.query.search.replace(/ /g, '%') +'%', req.user]}).then(function(quizes){
       res.render('quizes/index.ejs', {quizes: quizes, errors : []});
