@@ -3,7 +3,7 @@ var models= require('../models/models.js');
 exports.set = function(req, res, next) {
   
 	if(req.params.userId == req.session.user.id) 
-		models.User.addQuiz(req.quiz);
+		req.user.addQuiz(req.quiz);
 
 	res.redirect('/user/' + req.user.id + '/favourites');
 };
@@ -11,7 +11,7 @@ exports.set = function(req, res, next) {
 exports.unset = function(req, res, next) {
   
 	if(req.params.userId == req.session.user.id) 
-		models.User.removeQuiz(req.quiz);
+		req.user.removeQuiz(req.quiz);
 
 	res.redirect('/user/' + req.user.id + '/favourites');
 };
