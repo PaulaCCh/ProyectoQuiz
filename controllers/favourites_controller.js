@@ -20,7 +20,7 @@ exports.index = function(req, res, next) {
 
 	var favourites = models.User.findAll( { where: { id: Number(req.user.id)}, include: [{ model: models.Quiz }] }).then(function(user){
 
-console.log(user);
+console.log(user.Quizzes);
 
       res.render('quizes/index', {quizes: user.favourites, errors : []});
     }).catch(function(error){next(error);})
