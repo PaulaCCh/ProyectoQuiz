@@ -19,7 +19,9 @@ exports.unset = function(req, res, next) {
 exports.index = function(req, res, next) {
 	models.User.findAll( { where: { id: Number(req.param.userId)}, include: [{ model: models.Quiz }] }).then(function(user){
 
-
+		user.getFavourites().then(function (favs) {
+			res.render('quizes/show', {quiz: favs, errors : []});
+		})
       
     }).catch(function(error){next(error);})
 };
