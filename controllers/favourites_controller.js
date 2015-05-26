@@ -2,7 +2,7 @@ var models= require('../models/models.js');
 
 exports.set = function(req, res, next) {
   
-	if(req.param.userId == req.session.user.id) 
+	if(req.params.userId == req.session.user.id) 
 		models.User.addQuiz(req.quiz);
 
 	res.redirect('/user/' + req.user.id + '/favourites');
@@ -10,14 +10,14 @@ exports.set = function(req, res, next) {
 
 exports.unset = function(req, res, next) {
   
-	if(req.param.userId == req.session.user.id) 
+	if(req.params.userId == req.session.user.id) 
 		models.User.removeQuiz(req.quiz);
 
 	res.redirect('/user/' + req.user.id + '/favourites');
 };
 
 exports.index = function(req, res, next) {
-	models.User.findAll( { where: { id: Number(req.param.userId)}, include: [{ model: models.Quiz }] }).then(function(user){
+	models.User.findAll( { where: { id: Number(req.params.userId)}, include: [{ model: models.Quiz }] }).then(function(user){
 
 		user.getFavourites().then(function (favs) {
 			res.render('quizes/show', {quiz: favs, errors : []});
